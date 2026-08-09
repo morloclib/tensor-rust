@@ -1,0 +1,4 @@
+module test-tensor-rust (test)
+
+import tensor.test (test)
+import tensor-rust

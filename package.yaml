@@ -1,0 +1,13 @@
+name: tensor-rust
+version: 0.3.0
+homepage: https://github.com/morloclib/tensor-rust
+synopsis: Rust implementations for the tensor module
+description: Rust (ndarray) implementations of the Nat-parameterised dense Matrix/Tensor primitives.
+category: data
+license: MIT
+author: "Zebulun Arendsee"
+maintainer: "z@morloc.io"
+github: https://github.com/morloclib/tensor-rust
+bug-reports: https://github.com/morloclib/tensor-rust
+rust-deps:
+  ndarray: "0.16"

@@ -1,0 +1,68 @@
+module tensor-rust (*)
+
+import tensor
+import vector-rust
+import root-rust
+
+-- $N indexes TYPE parameters only; kind-kinded parameters (Nat phantom dims)
+-- are skipped in macro indexing. For Matrix/Tensor* the only type parameter is
+-- the element type, so the form references $1. Matrix/Tensor* map to ndarray's
+-- fixed-rank arrays (row-major, matching morloc's row-major wire form).
+type Rust => (Matrix (m :: Nat) (n :: Nat) a) = "ndarray::Array2<$1>" m n a
+type Rust => (Tensor3 (d1 :: Nat) (d2 :: Nat) (d3 :: Nat) a) = "ndarray::Array3<$1>" d1 d2 d3 a
+type Rust => (Tensor4 (d1 :: Nat) (d2 :: Nat) (d3 :: Nat) (d4 :: Nat) a) = "ndarray::Array4<$1>" d1 d2 d3 d4 a
+type Rust => (Tensor5 (d1 :: Nat) (d2 :: Nat) (d3 :: Nat) (d4 :: Nat) (d5 :: Nat) a) = "ndarray::Array5<$1>" d1 d2 d3 d4 d5 a
+
+
+source Rust from "tensor.rs"
+    ( "morloc_zeros2" as zeros2
+    , "morloc_zeros3" as zeros3
+    , "morloc_zeros4" as zeros4
+    , "morloc_zeros5" as zeros5
+    , "morloc_ones2" as ones2
+    , "morloc_ones3" as ones3
+    , "morloc_ones4" as ones4
+    , "morloc_ones5" as ones5
+    , "morloc_fill2" as fill2
+    , "morloc_fill3" as fill3
+    , "morloc_fill4" as fill4
+    , "morloc_fill5" as fill5
+    , "morloc_identity" as identity
+    , "morloc_matmul" as matmul
+    )
+
+instance Eq (Matrix d1 d2 a) where
+  source Rust from "tensor.rs" ("morloc_tensor_eq" as (==))
+
+instance Eq (Tensor3 d1 d2 d3 a) where
+  source Rust from "tensor.rs" ("morloc_tensor_eq" as (==))
+
+instance Eq (Tensor4 d1 d2 d3 d4 a) where
+  source Rust from "tensor.rs" ("morloc_tensor_eq" as (==))
+
+instance Eq (Tensor5 d1 d2 d3 d4 d5 a) where
+  source Rust from "tensor.rs" ("morloc_tensor_eq" as (==))
+
+instance Packable ((Int, Int), Vector (d1 * d2) a) (Matrix d1 d2 a) where
+  source Rust from "tensor.rs"
+    ( "morloc_packMatrix" as pack
+    , "morloc_unpackMatrix" as unpack
+    )
+
+instance Packable ((Int, Int, Int), Vector (d1 * d2 * d3) a) (Tensor3 d1 d2 d3 a) where
+  source Rust from "tensor.rs"
+    ( "morloc_packTensor3" as pack
+    , "morloc_unpackTensor3" as unpack
+    )
+
+instance Packable ((Int, Int, Int, Int), Vector (d1 * d2 * d3 * d4) a) (Tensor4 d1 d2 d3 d4 a) where
+  source Rust from "tensor.rs"
+    ( "morloc_packTensor4" as pack
+    , "morloc_unpackTensor4" as unpack
+    )
+
+instance Packable ((Int, Int, Int, Int, Int), Vector (d1 * d2 * d3 * d4 * d5) a) (Tensor5 d1 d2 d3 d4 d5 a) where
+  source Rust from "tensor.rs"
+    ( "morloc_packTensor5" as pack
+    , "morloc_unpackTensor5" as unpack
+    )
