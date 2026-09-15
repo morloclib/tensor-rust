@@ -1,5 +1,5 @@
 name: tensor-rust
-version: 0.4.0
+version: 0.5.0
 homepage: https://github.com/morloclib/tensor-rust
 synopsis: Rust implementations for the tensor module
 description: Rust (ndarray) implementations of the Nat-parameterised dense Matrix/Tensor primitives.
