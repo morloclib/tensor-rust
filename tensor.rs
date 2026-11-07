@@ -102,6 +102,13 @@ pub fn morloc_tensor_eq<A: PartialEq, D: ndarray::Dimension>(
     a == b
 }
 
+pub fn morloc_tensor_ne<A: PartialEq, D: ndarray::Dimension>(
+    a: &ndarray::Array<A, D>,
+    b: &ndarray::Array<A, D>,
+) -> bool {
+    a != b
+}
+
 // ---------------------------------------------------------------------------
 // Packable: wire form ((dims...), flat Vec, row-major) <-> shaped ArrayN.
 // `.iter()` on any ndarray Array yields elements in logical (row-major) order,
